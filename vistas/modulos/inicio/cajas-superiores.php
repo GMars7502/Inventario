@@ -25,7 +25,7 @@ $totalProductos = count($productos);
       <p>Ventas</p>
     </div>
     <div class="icon">
-      <i class="ion ion-social-usd"></i>
+      <i  style="font-weight: bold;">S/.</i>
     </div>
     <a href="ventas" class="small-box-footer">
       Más info <i class="fa fa-arrow-circle-right"></i>

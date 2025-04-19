@@ -50,7 +50,7 @@ if($xml){
       <div class="box-header with-border">
   
         <a href="crear-venta">
-
+        <!--
           <button class="btn btn-primary">
             
             Agregar venta
@@ -58,6 +58,7 @@ if($xml){
           </button>
 
         </a>
+        -->
 
          <button type="button" class="btn btn-default pull-right" id="daterange-btn">
            
@@ -149,9 +150,9 @@ if($xml){
 
                   <td>'.$value["metodo_pago"].'</td>
 
-                  <td>$ '.number_format($value["neto"],2).'</td>
+                  <td>S/. '.number_format($value["neto"],2).'</td>
 
-                  <td>$ '.number_format($value["total"],2).'</td>
+                  <td>S/. '.number_format($value["total"],2).'</td>
 
                   <td>'.$value["fecha"].'</td>
 
@@ -163,13 +164,13 @@ if($xml){
 
                       <button class="btn btn-success btnImprimirTicket" codigoVenta="'.$value["codigo"].'">
 
-                        <i class="fa fa-print">Ticket</i>
+                        <i class="fa fa-print"> Factura</i>
 
                       </button>
                         
                       <button class="btn btn-info btnImprimirFactura" codigoVenta="'.$value["codigo"].'">
 
-                        <i class="fa fa-print"></i>PDF
+                        <i class="fa fa-print"></i> PDF
 
                       </button>';
 

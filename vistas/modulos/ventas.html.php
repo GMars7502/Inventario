@@ -28,7 +28,7 @@
 
           <button class="btn btn-primary">
             
-            Agregar venta
+            Agregar venta <!--ESTE NO ES EL SITIO PRINCIPAL-->
 
           </button>
 
@@ -72,9 +72,9 @@
 
             <td>TC-12412425346</td>
 
-            <td>$ 1,000.00</td>
+            <td>S/. 1,000.00</td>
 
-            <td>$ 1,190.00</td>
+            <td>S/. 1,190.00</td>
 
             <td>2017-12-11 12:05:32</td>
 

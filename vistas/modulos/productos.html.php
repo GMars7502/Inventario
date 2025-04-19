@@ -64,8 +64,8 @@
             <td>Lorem ipsum dolor sit amet</td>
             <td>Lorem Ipsum</td>
             <td>20</td>
-            <td>$ 5.00</td>
-            <td>$ 10.00</td>
+            <td>S/. 5.00</td>
+            <td>S/. 10.00</td>
             <td>2017-12-11 12:05:32</td>
             <td>
 
@@ -89,8 +89,8 @@
             <td>Lorem ipsum dolor sit amet</td>
             <td>Lorem Ipsum</td>
             <td>20</td>
-            <td>$ 5.00</td>
-            <td>$ 10.00</td>
+            <td>S/. 5.00</td>
+            <td>S/. 10.00</td>
             <td>2017-12-11 12:05:32</td>
             <td>
 
@@ -113,8 +113,8 @@
             <td>Lorem ipsum dolor sit amet</td>
             <td>Lorem Ipsum</td>
             <td>20</td>
-            <td>$ 5.00</td>
-            <td>$ 10.00</td>
+            <td>S/. 5.00</td>
+            <td>S/. 10.00</td>
             <td>2017-12-11 12:05:32</td>
             <td>
 

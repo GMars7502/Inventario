@@ -127,7 +127,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
 	            '<div class="input-group">'+
 
-	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+	              '<span class="input-group-addon"><i  style="font-weight: bold;">S/.</i></span>'+
 	                 
 	              '<input type="text" class="form-control nuevoPrecioProducto" onchange="cambios()" precioReal="'+precio+'" name="nuevoPrecioProducto" value="'+precio+'" required>'+
 	 
@@ -236,10 +236,11 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 
 	if($(".nuevoProducto").children().length == 0){
 
-		$("#nuevoImpuestoVenta").val(0);
+		$("#nuevoImpuestoVenta").val(18);
 		$("#nuevoTotalVenta").val(0);
 		$("#totalVenta").val(0);
 		$("#nuevoTotalVenta").attr("total",0);
+		$("#importeImpuesto").val(0);
 
 	}else{
 
@@ -319,7 +320,7 @@ $(".btnAgregarProducto").click(function(){
 
 	            '<div class="input-group">'+
 
-	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+	              '<span class="input-group-addon"><i  style="font-weight: bold;">S/.</i></span>'+
 	                 
 	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+
 	 
@@ -497,6 +498,9 @@ function sumarTotalPrecios(){
 	$("#totalVenta").val(sumaTotalPrecio);
 	$("#nuevoTotalVenta").attr("total",sumaTotalPrecio);
 
+	$("#nuevoImpuestoVenta").val(18);
+
+	agregarImpuesto();
 
 }
 
@@ -520,6 +524,9 @@ function agregarImpuesto(){
 	$("#nuevoPrecioImpuesto").val(precioImpuesto);
 
 	$("#nuevoPrecioNeto").val(precioTotal);
+
+	//para que muestre el precioneto del impuesto
+	$("#importeImpuesto").val(precioImpuesto.toFixed(2));
 
 }
 
@@ -559,11 +566,13 @@ $("#nuevoMetodoPago").change(function(){
 
 			 	'<div class="input-group">'+ 
 
-			 		'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+ 
+			 		'<span class="input-group-addon"><i  style="font-weight: bold;">S/.</i></span>'+ 
 
 			 		'<input type="text" class="form-control" id="nuevoValorEfectivo" placeholder="000000" required>'+
 
 			 	'</div>'+
+				'<small id="errorEfectivo" class="text-danger" style="display:none;">El efectivo no cubre el total de la venta.</small>'+
+
 
 			 '</div>'+
 
@@ -571,7 +580,7 @@ $("#nuevoMetodoPago").change(function(){
 
 			 	'<div class="input-group">'+
 
-			 		'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+			 		'<span class="input-group-addon"><i  style="font-weight: bold;">S/.</i></span>'+
 
 			 		'<input type="text" class="form-control" id="nuevoCambioEfectivo" placeholder="000000" readonly required>'+
 
@@ -624,6 +633,15 @@ $(".formularioVenta").on("change", "input#nuevoValorEfectivo", function(){
 	var efectivo = $(this).val();
 
 	var cambio =  Number(efectivo) - Number($('#nuevoTotalVenta').val());
+
+	if (cambio < 0) {
+		// Mostrar el mensaje de error
+		$("#errorEfectivo").show();
+	} else {
+		// Ocultar el mensaje si está todo bien
+		$("#errorEfectivo").hide();
+	}
+
 
 	var nuevoCambioEfectivo = $(this).parent().parent().parent().children('#capturarCambioEfectivo').children().children('#nuevoCambioEfectivo');
 
@@ -908,3 +926,34 @@ $(".abrirXML").click(function(){
 })
 
 
+$(".formularioVenta").on("submit", function(e){
+
+	var efectivo = Number($('#nuevoValorEfectivo').val());
+	var total = Number($('#nuevoTotalVenta').val());
+
+	if (efectivo < total) {
+
+		e.preventDefault();// Detiene el envío
+
+		/*
+		swal({
+	      title: "La cantidad supera el Stock",
+	      text: "¡Sólo hay "+$(this).attr("stock")+" unidades!",
+	      type: "error",
+	      confirmButtonText: "¡Cerrar!"
+	    });
+
+		*/
+
+		swal({
+			title: "No se puede guardar la venta",
+			text: "El efectivo ingresado no cubre el total de la venta.",
+			type: "error",
+			confirmButtonText: '¡Cerrar!'
+		});
+
+		
+
+		return;
+	}
+});
