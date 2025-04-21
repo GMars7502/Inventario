@@ -120,7 +120,23 @@ class ControladorVentas{
 						   "impuesto"=>$_POST["nuevoPrecioImpuesto"],
 						   "neto"=>$_POST["nuevoPrecioNeto"],
 						   "total"=>$_POST["totalVenta"],
-						   "metodo_pago"=>$_POST["listaMetodoPago"]);
+						   "metodo_pago"=>$_POST["listaMetodoPago"],
+						   "delivery"=>$_POST["delivery_json"],
+						   "delivery_costo"=>$_POST["costoDelivery"],
+						);
+
+			
+						echo "<pre>";
+						var_dump($datos);
+						echo "</pre>";
+
+						echo "<pre>";
+						print_r($datos);
+						echo "</pre>";
+
+						echo "<script>console.log(" . json_encode($datos) . ");</script>";
+
+			
 
 			$respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 

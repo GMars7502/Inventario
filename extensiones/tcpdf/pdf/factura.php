@@ -29,6 +29,7 @@ class imprimirFactura {
         $neto = number_format($respuestaVenta["neto"], 2);
         $impuesto = number_format($respuestaVenta["impuesto"], 2);
         $total = number_format($respuestaVenta["total"], 2);
+        $costoDelivery = number_format($respuestaVenta["delivery_costo"], 2);
 
         //TRAEMOS LA INFORMACIÓN DEL CLIENTE
         $itemCliente = "id";
@@ -141,6 +142,11 @@ EOF;
                 <td style="border-right: 1px solid #666; width:340px;"></td>
                 <td style="border: 1px solid #666; background-color:white; text-align:center">Neto:</td>
                 <td style="border: 1px solid #666; background-color:white; text-align:center">S/ $neto</td>
+            </tr>
+            <tr>
+                <td style="border-right: 1px solid #666; width:340px;"></td>
+                <td style="border: 1px solid #666; background-color:white; text-align:center">Costo Delivery:</td>
+                <td style="border: 1px solid #666; background-color:white; text-align:center">S/ $costoDelivery</td>
             </tr>
             <tr>
                 <td style="border-right: 1px solid #666; width:340px;"></td>

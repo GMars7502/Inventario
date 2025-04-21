@@ -516,10 +516,12 @@ function agregarImpuesto(){
 	var precioImpuesto = Number(precioTotal * impuesto/100);
 
 	var totalConImpuesto = Number(precioImpuesto) + Number(precioTotal);
-	
-	$("#nuevoTotalVenta").val(totalConImpuesto);
 
-	$("#totalVenta").val(totalConImpuesto);
+	var totalConImpuestoConDelivery = Number(totalConImpuesto) + Number(costoDeliveryGlobal);
+	
+	$("#nuevoTotalVenta").val(totalConImpuestoConDelivery);
+
+	$("#totalVenta").val(totalConImpuestoConDelivery);
 
 	$("#nuevoPrecioImpuesto").val(precioImpuesto);
 
@@ -925,6 +927,9 @@ $(".abrirXML").click(function(){
 
 })
 
+/*=============================================
+ERROR EN LA CANTIDAD DE EFECTIVO DEVUELTO
+=============================================*/
 
 $(".formularioVenta").on("submit", function(e){
 
@@ -957,3 +962,84 @@ $(".formularioVenta").on("submit", function(e){
 		return;
 	}
 });
+
+
+//#region delivery
+
+
+
+/*=============================================
+HABILITAR O DESABILITAR BOTÓN PARA AGREGAR DELIVERY
+=============================================*/
+
+$(".formularioVenta").on("change", "#opcionDelivery", function () {
+
+	var opcion = $(this).val();
+
+	if(opcion === "SI"){
+
+		$("#btnAgregarDeli").prop("disabled", false);
+
+	}else{
+
+		$("#btnAgregarDeli").prop("disabled", true);
+
+	}
+
+});
+
+
+
+
+
+
+/*=============================================
+GURDAR INFORMACIÓN DEL MODAL DELIVERY
+=============================================*/
+
+var costoDeliveryGlobal = 0;
+
+$("#modalAgregarDelivery .btn-primary").click(function (e) {
+	  e.preventDefault(); // Para que no recargue si está en un form
+
+	  	const nombre = $("#nombre_delivery").val().trim();
+		const direccion = $("#direccion_delivery").val().trim();
+		const telefono = $("#telefono_delivery").val().trim();
+		const costo = $("#costo_delivery").val().trim();
+
+		if (!nombre || !direccion || !telefono || !costo) {
+			swal("Error", "Por favor, completa todos los campos obligatorios.", "error");
+			return;
+		}
+  
+	  const dataDelivery = {
+		nombre: $("#nombre_delivery").val(),
+		direccion: $("#direccion_delivery").val(),
+		referencias: $("#referencias_delivery").val(),
+		telefono: $("#telefono_delivery").val(),
+		costo: $("#costo_delivery").val()
+	  };
+
+	  
+
+	  
+	  $("#costoDelivery").val(parseFloat(dataDelivery.costo));
+
+	  costoDeliveryGlobal = parseFloat(dataDelivery.costo) || 0;
+  
+	  // Lo convertimos en string JSON
+	  const jsonString = JSON.stringify(dataDelivery);
+
+	  // Lo colocamos en el input oculto
+	  $("#delivery_json").val(jsonString);
+  
+	  // Cerramos el modal
+	  $("#modalAgregarDelivery").modal('hide');
+
+
+	  $("#delivery_json").val(jsonString);
+
+	  agregarImpuesto();
+
+});
+  

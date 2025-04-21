@@ -155,6 +155,29 @@ if($_SESSION["perfil"] == "Especial"){
                 
                 </div>
 
+                <!--======================================
+                ENTRADA DEL DELIVERY
+                =======================================-->
+
+                <div>
+                  <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                      
+                      <select class="form-control" id="opcionDelivery" name="opcionDelivery">
+                          <option value="">Sin delivery</option>
+                          <option value="SI">Con delivery</option>
+                      </select>
+
+                      <span class="input-group-addon"><button id="btnAgregarDeli" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAgregarDelivery" data-dismiss="modal" disabled>Agregar Informacion</button></span>
+
+                      <!--Input oculto para guardar información del delivery-->
+                      <input type="hidden" name="delivery_json" id="delivery_json">
+                  </div>
+                </div>
+
+                
+                
+
                 <!--=====================================
                 ENTRADA PARA AGREGAR PRODUCTO
                 ======================================--> 
@@ -215,7 +238,7 @@ if($_SESSION["perfil"] == "Especial"){
                           </td>
 
                            <td style="width: 50%">
-                            
+
                             <div class="input-group">
                            
                               <span class="input-group-addon"><i  style="font-weight: bold;">S/.</i></span>
@@ -237,6 +260,15 @@ if($_SESSION["perfil"] == "Especial"){
                             <div class="input-group">
                               <span class="input-group-addon"><i style="font-weight: bold;">S/.</i></span>
                               <input type="text" class="form-control input-lg" id="importeImpuesto" name="importeImpuesto" placeholder="0.00" readonly>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                        <td style="width: 25%">
+                            <div class="input-group">
+                              <span class="input-group-addon"><i style="font-weight: bold;">S/.</i></span>
+                              <input type="text" class="form-control input-lg" id="costoDelivery" name="costoDelivery" placeholder="0.00" readonly>
                             </div>
                           </td>
                         </tr>
@@ -344,6 +376,15 @@ if($_SESSION["perfil"] == "Especial"){
   </section>
 
 </div>
+
+<?php
+
+#region MODALES
+
+?>
+
+
+
 
 <!--=====================================
 MODAL AGREGAR CLIENTE
@@ -491,3 +532,143 @@ MODAL AGREGAR CLIENTE
   </div>
 
 </div>
+
+
+<?php
+#region Modal delivery 
+?>
+
+<!--=====================================
+MODAL AGREGAR Delivery
+======================================-->
+
+<div id="modalAgregarDelivery" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Agregar Inf.Delivery</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" id="nombre_delivery" name="nombre" placeholder="Ingresar nombre" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL DIRECCION -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" id="direccion_delivery" name="direccion" placeholder="Ingresar Dirección" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL REFERENCIAS -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" id="referencias_delivery" name="referencias" placeholder="Ingresar referencias (no requerido)">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL TELEFONO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
+
+                <input type="number" class="form-control input-lg" id="telefono_delivery" name="telefono" placeholder="Ingresar N° Telef/celular" required>
+
+              </div>
+              
+
+            </div>
+
+            <!-- ENTRADA PARA EL COSTO -->
+
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="">S/.</i></span> 
+
+                <input type="number" class="form-control input-lg" id="costo_delivery" name="costo" placeholder="0.00" required>
+
+              </div>
+              
+
+            </div>
+
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar</button>
+
+        </div>
+
+      </form>
+
+      <?php
+      #endregion
+
+      ?>
+
+    </div>
+
+  </div>
+
+</div>
+

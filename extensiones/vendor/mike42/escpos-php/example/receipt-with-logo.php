@@ -44,7 +44,7 @@ $printer -> setEmphasis(false);
 /* Items */
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 $printer -> setEmphasis(true);
-$printer -> text(new item('', '$'));
+$printer -> text(new item('', 'S/.'));
 $printer -> setEmphasis(false);
 foreach ($items as $item) {
     $printer -> text($item);
