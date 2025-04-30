@@ -1,6 +1,6 @@
 <footer class="main-footer">
 	
-	<strong>Copyright &copy; 2019 <a href="https://www.compartiendocodigos.net/" target="_blank">Compartiendo Códigos</a>.</strong>
+	<strong>Ultima actualización 29/04/2025</strong>
 
 	Todos los derechos reservados.
 

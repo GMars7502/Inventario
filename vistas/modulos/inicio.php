@@ -72,7 +72,7 @@
 
           if($_SESSION["perfil"] =="Administrador"){
           
-           include "inicio/productos-recientes.php";
+           //include "inicio/productos-recientes.php";
 
          }
 

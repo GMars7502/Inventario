@@ -16,8 +16,8 @@
 
 
 -- Volcando estructura de base de datos para sis_inventario
-CREATE DATABASE IF NOT EXISTS `sis_inventario` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `sis_inventario`;
+CREATE DATABASE IF NOT EXISTS `sis_inventario_2` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `sis_inventario_2`;
 
 -- Volcando estructura para tabla sis_inventario.cache
 CREATE TABLE IF NOT EXISTS `cache` (
