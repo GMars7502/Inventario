@@ -55,10 +55,17 @@
 
                     $cliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-                    $porcentajeImpuesto = $venta["impuesto"] * 100 / $venta["neto"];
+                    $porcentajeImpuesto = $venta["impuesto"]  / $venta["neto"];
 
+                    echo $porcentajeImpuesto;
+                    print_r($porcentajeImpuesto);
 
-                ?>
+                    
+                    $delivery = $venta["delivery"]? json_decode($venta["delivery"], true) : "";
+                    
+                    
+
+                  ?>
 
                 <!--=====================================
                 ENTRADA DEL VENDEDOR
@@ -192,6 +199,30 @@
                 </div>
 
                 <input type="hidden" id="listaProductos" name="listaProductos">
+                
+                <!--======================================
+                ENTRADA DEL DELIVERY
+                =======================================-->
+
+                <div>
+                  <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                      
+                      <select class="form-control" id="opcionDelivery" name="opcionDelivery">
+                          <option value="" <?php if ($delivery == "") echo 'selected';  ?>>Sin delivery</option>
+                          <option value="SI" <?php if ($delivery != "") echo 'selected';?>>Con delivery</option>
+                      </select>
+
+                      <span class="input-group-addon"><button id="btnAgregarDeli" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAgregarDelivery" data-dismiss="modal" disabled>Agregar Informacion</button></span>
+
+                      <!--Input oculto para guardar información del delivery-->
+                      <input type="hidden" name="delivery_json" id="delivery_json">
+                  </div>
+                </div>
+
+
+
+
 
                 <!--=====================================
                 BOTÓN PARA AGREGAR PRODUCTO
@@ -255,6 +286,26 @@
 
                           </td>
 
+                        </tr>
+
+                        <tr>
+                          
+                          <td style="width: 25%">
+                            <div class="input-group">
+                              <span class="input-group-addon"><i style="font-weight: bold;">S/.</i></span>
+                              <input type="text" class="form-control input-lg" id="importeImpuesto" name="importeImpuesto" placeholder="0.00" 
+                              value = '<?php echo $porcentajeImpuesto;?>' readonly>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                        <td style="width: 25%">
+                            <div class="input-group">
+                              <span class="input-group-addon"><i style="font-weight: bold;">S/.</i></span>
+                              <input type="text" class="form-control input-lg" id="costoDelivery" name="costoDelivery" placeholder="0.00" value="<?php echo $delivery ? $delivery['costo'] : ''; ?>"  readonly>
+                            </div>
+                          </td>
                         </tr>
 
                       </tbody>
@@ -507,3 +558,149 @@ MODAL AGREGAR CLIENTE
   </div>
 
 </div>
+
+
+
+
+<?php
+#region Modal delivery 
+
+
+
+?>
+
+<!--=====================================
+MODAL AGREGAR Delivery
+======================================-->
+
+<div id="modalAgregarDelivery" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Agregar Inf.Delivery</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" id="nombre_delivery" name="nombre" placeholder="Ingresar nombre" value="<?php echo $delivery ? $delivery['nombre'] : ''; ?>" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL DIRECCION -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" id="direccion_delivery" name="direccion" placeholder="Ingresar Dirección" value="<?php echo $delivery ? $delivery['direccion'] : ''; ?>" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL REFERENCIAS -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" id="referencias_delivery" name="referencias" placeholder="Ingresar referencias (no requerido)"
+                value="<?php echo $delivery ? $delivery['referencias'] : ''; ?>" >
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL TELEFONO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
+
+                <input type="number" class="form-control input-lg" id="telefono_delivery" name="telefono" placeholder="Ingresar N° Telef/celular" value="<?php echo $delivery ? $delivery['telefono'] : ''; ?>" required>
+
+              </div>
+              
+
+            </div>
+
+            <!-- ENTRADA PARA EL COSTO -->
+
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="">S/.</i></span> 
+
+                <input type="number" class="form-control input-lg" id="costo_delivery" name="costo" placeholder="0.00" value="<?php echo $delivery ? $delivery['costo'] : ''; ?>" required>
+
+              </div>
+              
+
+            </div>
+
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar</button>
+
+        </div>
+
+      </form>
+
+      <?php
+      #endregion
+
+      ?>
+
+    </div>
+
+  </div>
+
+</div>
+

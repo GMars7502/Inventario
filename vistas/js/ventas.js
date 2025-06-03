@@ -236,7 +236,7 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 
 	if($(".nuevoProducto").children().length == 0){
 
-		$("#nuevoImpuestoVenta").val(18);
+		$("#nuevoImpuestoVenta").val(0); //impuesto
 		$("#nuevoTotalVenta").val(0);
 		$("#totalVenta").val(0);
 		$("#nuevoTotalVenta").attr("total",0);
@@ -498,7 +498,7 @@ function sumarTotalPrecios(){
 	$("#totalVenta").val(sumaTotalPrecio);
 	$("#nuevoTotalVenta").attr("total",sumaTotalPrecio);
 
-	$("#nuevoImpuestoVenta").val(18);
+	$("#nuevoImpuestoVenta").val(0);//impuesto
 
 	agregarImpuesto();
 
@@ -961,6 +961,28 @@ $(".formularioVenta").on("submit", function(e){
 
 		return;
 	}
+
+    var opcionDelivery = $("#opcionDelivery").val();
+    var nombre_delivery = $("#nombre_delivery").val().trim();
+    var direccion_delivery = $("#direccion_delivery").val().trim();
+    var telefono_delivery = $("#telefono_delivery").val().trim();
+    var costo_delivery = $("#costo_delivery").val().trim();
+
+    if (opcionDelivery === "SI") {
+        if (!nombre_delivery || !direccion_delivery || !telefono_delivery || !costo_delivery) {
+            e.preventDefault(); // Detiene el envío
+            swal({
+                title: "Información de Delivery Incompleta",
+                text: "Por favor, completa todos los campos necesarios para el delivery.",
+                type: "error",
+                confirmButtonText: '¡Cerrar!'
+            });
+            return;
+        }
+    }
+
+
+
 });
 
 
@@ -981,10 +1003,44 @@ $(".formularioVenta").on("change", "#opcionDelivery", function () {
 		$("#btnAgregarDeli").prop("disabled", false);
 
 	}else{
-
 		$("#btnAgregarDeli").prop("disabled", true);
 
+		costoDeliveryGlobal = 0;
+		$("#costoDelivery").val(0);
+
+		agregarImpuesto();
+
+		sumarTotalPrecios();
+
+		
+
 	}
+
+});
+
+$(document).ready(function() {
+
+    var costoDeliveryInput = $("#costoDelivery").val();
+
+    var opcionDelivery = $("#opcionDelivery").val();
+    
+
+    if (opcionDelivery === "SI") {
+        $("#btnAgregarDeli").prop("disabled", false);
+		
+    } else {
+        $("#btnAgregarDeli").prop("disabled", true);
+		$("#costoDelivery").val(0);
+		costoDeliveryGlobal = 0;
+    }
+	// Obtenemos el valor del costo de delivery del input directamente
+    costoDeliveryGlobal = parseFloat(costoDeliveryInput) || 0;
+
+	agregarImpuesto();
+
+	sumarTotalPrecios();
+	
+
 
 });
 

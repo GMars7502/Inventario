@@ -224,8 +224,9 @@ if($_SESSION["perfil"] == "Especial"){
                           <td style="width: 50%">
                             
                             <div class="input-group">
+                              <!--impuesto -->
                            
-                              <input type="number" class="form-control input-lg" min="18" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" value="18" placeholder="18" readonly required>
+                              <input type="number" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" value="0" placeholder="0" readonly required>
 
                                <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
 
@@ -253,22 +254,28 @@ if($_SESSION["perfil"] == "Especial"){
                           </td>
 
                         </tr>
-
+                        <!--=====================================-->
+                        <!--Importe total de impuesto -->
+                        <!--=====================================-->
                         <tr>
-                          
+                          <!--
                           <td style="width: 25%">
                             <div class="input-group">
                               <span class="input-group-addon"><i style="font-weight: bold;">S/.</i></span>
                               <input type="text" class="form-control input-lg" id="importeImpuesto" name="importeImpuesto" placeholder="0.00" readonly>
                             </div>
-                          </td>
+                          </td>-->
                         </tr>
+
+                        <!--=====================================-->
+                        <!--Importe total de delivery -->
+                        <!--=====================================-->
 
                         <tr>
                         <td style="width: 25%">
                             <div class="input-group">
                               <span class="input-group-addon"><i style="font-weight: bold;">S/.</i></span>
-                              <input type="text" class="form-control input-lg" id="costoDelivery" name="costoDelivery" placeholder="0.00" readonly>
+                              <input type="text" class="form-control input-lg" id="costoDelivery" name="costoDelivery" placeholder="0.00" value="0.00" readonly>
                             </div>
                           </td>
                         </tr>

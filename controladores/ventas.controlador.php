@@ -16,6 +16,8 @@ class ControladorVentas{
 		$tabla = "ventas";
 
 		$respuesta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
+		
+			
  
 		return $respuesta;
 
@@ -45,7 +47,6 @@ class ControladorVentas{
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "ventas";
 
 								}
 							})
@@ -124,17 +125,6 @@ class ControladorVentas{
 						   "delivery"=>$_POST["delivery_json"],
 						   "delivery_costo"=>$_POST["costoDelivery"],
 						);
-
-			
-						echo "<pre>";
-						var_dump($datos);
-						echo "</pre>";
-
-						echo "<pre>";
-						print_r($datos);
-						echo "</pre>";
-
-						echo "<script>console.log(" . json_encode($datos) . ");</script>";
 
 			
 
@@ -223,27 +213,11 @@ class ControladorVentas{
 				$printer -> pulse(); //Por medio de la impresora mandamos un pulso, es útil cuando hay cajón moneder
 
 				$printer -> close();*/
-
 	
-				echo'<script>
-
-				localStorage.removeItem("rango");
-
-				swal({
-					  type: "success",
-					  title: "La venta ha sido guardada correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar"
-					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "ventas";
-
-								}
-							})
-
-				</script>';
-
+				echo "<script>
+				var mostrarModalVentaExitosa = true;
+				window.codigoVentaActual = '" . $_POST["nuevaVenta"] . "';
+				</script>";
 			}
 
 		}
@@ -783,4 +757,66 @@ class ControladorVentas{
 
 	}
 
+
+
+
 }
+
+
+?>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Modal mejorado para mostrar tras guardar venta -->
+<div class="modal fade" id="ventaExitosaModal" tabindex="-1" role="dialog" aria-labelledby="ventaExitosaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg rounded-lg">
+      <div class="modal-header bg-success text-white border-0">
+        <h5 class="modal-title" id="ventaExitosaModalLabel">
+          <i class="fas fa-check-circle mr-2"></i> ¡Venta guardada con éxito!
+        </h5>
+        <button type="button" class="close text-white custom-close" data-dismiss="modal" aria-label="Cerrar" style="font-size: 3rem; line-height: 1;">
+		<span aria-hidden="true">&times;</span>
+		</button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="mb-4">¿Qué deseas hacer a continuación?</p>
+        <div class="d-flex justify-content-center gap-3">
+          <button id="btnVerFactura" class="btn btn-outline-primary mr-2">
+            <i class="fas fa-file-invoice mr-1"></i> Ver Factura
+          </button>
+          <button id="btnVerTicket" class="btn btn-outline-secondary">
+            <i class="fas fa-receipt mr-1"></i> Ver Ticket
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center border-0">
+        <small class="text-muted">Puedes cerrar esta ventana si no deseas ver ninguno.</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Si existe esta variable global (inyectada desde PHP), se abre el modal
+    if (typeof mostrarModalVentaExitosa !== 'undefined' && mostrarModalVentaExitosa === true) {
+      $('#ventaExitosaModal').modal('show');
+    }
+
+    document.getElementById("btnVerFactura").addEventListener("click", function () {
+      const codigoVenta = window.codigoVentaActual;
+      window.open(`http://localhost/Inventario%20-%20editLewis/extensiones/tcpdf/pdf/factura.php?codigo=${codigoVenta}`, "_blank");
+    });
+
+    document.getElementById("btnVerTicket").addEventListener("click", function () {
+      const codigoVenta = window.codigoVentaActual;
+      window.open(`http://localhost/Inventario%20-%20editLewis/extensiones/tcpdf/pdf/ticket.php?codigo=${codigoVenta}`, "_blank");
+    });
+  });
+</script>
