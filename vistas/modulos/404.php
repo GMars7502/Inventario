@@ -30,7 +30,7 @@
 
           <i class="fa fa-warning text-primary"></i> 
 
-          Ooops! Página no encontrada.
+          Ooops! Página no encontrada. Buscante otra Campeón
 
         </h3>
 

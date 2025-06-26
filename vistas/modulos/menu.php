@@ -47,6 +47,17 @@
 
 			<li>
 
+				<a href="inventario">
+
+					<i class="fa fa-archive"></i>
+					<span>Inventario</span>
+
+				</a>
+
+			</li>
+
+			<li>
+
 				<a href="productos">
 
 					<i class="fa fa-product-hunt"></i>
