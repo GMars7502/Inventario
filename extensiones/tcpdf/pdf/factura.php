@@ -145,11 +145,6 @@ EOF;
             </tr>
             <tr>
                 <td style="border-right: 1px solid #666; width:340px;"></td>
-                <td style="border: 1px solid #666; background-color:white; text-align:center">Costo Delivery:</td>
-                <td style="border: 1px solid #666; background-color:white; text-align:center">S/ $costoDelivery</td>
-            </tr>
-            <tr>
-                <td style="border-right: 1px solid #666; width:340px;"></td>
                 <td style="border: 1px solid #666; background-color:white; text-align:center">Impuesto:</td>
                 <td style="border: 1px solid #666; background-color:white; text-align:center">S/ $impuesto</td>
             </tr>

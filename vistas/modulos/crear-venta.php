@@ -159,6 +159,8 @@ if($_SESSION["perfil"] == "Especial"){
                 ENTRADA DEL DELIVERY
                 =======================================-->
 
+                <!--
+
                 <div>
                   <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-users"></i></span>
@@ -169,12 +171,11 @@ if($_SESSION["perfil"] == "Especial"){
                       </select>
 
                       <span class="input-group-addon"><button id="btnAgregarDeli" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAgregarDelivery" data-dismiss="modal" disabled>Agregar Informacion</button></span>
-
-                      <!--Input oculto para guardar información del delivery-->
+      
                       <input type="hidden" name="delivery_json" id="delivery_json">
                   </div>
                 </div>
-
+                      -->
                 
                 
 
