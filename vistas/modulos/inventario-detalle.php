@@ -158,7 +158,7 @@
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-code"></i></span>
 
-                <select class="form-control input-lg" id="tipoMovimiento" name="tipoMovimiento" required>
+                <select class="form-control input-lg" id="tipoMovimiento" name="tipoMovimiento" required disabled>
                   <option value="">Seleccione tipo</option>
                   <option value="entrada">Entrada</option>
                   <option value="salida">Salida</option>
@@ -204,7 +204,7 @@
 
                   <input type="text" class="form-control input-lg" 
                         id="facturacion" name="facturacion" 
-                        maxlength="50" required>
+                        maxlength="50">
                 </div>
               </div>
 
@@ -342,15 +342,6 @@
                                     </div>
                                 </div>
 
-
-                                <div class="form-group">
-                                    <label for="proveedorEntrada">Proveedor:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-truck"></i></span> 
-                                        <input type="text" class="form-control input-lg" 
-                                               id="proveedorEntrada" name="proveedorEntrada" maxlength="100">
-                                    </div>
-                                </div>
 
                             </div>
                         </div>

@@ -80,7 +80,7 @@ $(document).ready(function(){
                     });
 
                 } else {
-                    Swal.fire({
+                    swal({
                         type: "error",
                         title: "Error en los datos recibidos",
                         text: "El formato de la información del producto es incorrecto o faltan datos.",
@@ -147,8 +147,6 @@ $(document).ready(function(){
                             confirmButtonText: "Cerrar"
                         }).then((result) => {
                             if (result.value) {
-                                $('#modalEditarMovimiento').modal('hide'); 
-
                                 
                                 window.location.reload(); // Recarga completa para simplicidad
                             }
@@ -216,7 +214,7 @@ $(document).ready(function(){
 
                      $('#modalEditarMovimiento').modal('show');
                 } else {
-                    Swal.fire({
+                    swal({
                         type: "error",
                         title: "Error al cargar movimiento",
                         text: "No se pudieron obtener los datos del movimiento.",
@@ -227,7 +225,7 @@ $(document).ready(function(){
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error("Error al cargar datos de movimiento para editar:", textStatus, errorThrown);
-                Swal.fire({
+                swal({
                     type: "error",
                     title: "Error de conexión",
                     text: "Hubo un problema al intentar cargar los datos del movimiento.",
@@ -254,18 +252,47 @@ $(document).ready(function(){
         var observacion = $("#modalEditarMovimiento #observacion").val();
         var id_producto = localStorage.getItem("idProductoDetalle");
 
-        // Validaciones básicas antes de enviar
-        if(fecha === "" || tipoMovimiento === "" || cantidadMovimiento === "" || facturacion === "" || observacion === "" || id_producto === ""
-        ){
-            swal({
+
+        if(tipoMovimiento === ""){ swal({
                 type: "error",
-                title: "Campos vacíos",
-                text: "Por favor, complete todos los campos obligatorios para editar el movimiento.",
+                title: "ERROR SIS",
+                text: "TIPO DE MOVIMIENTO NO RECONOCIDO.",
                 showConfirmButton: true,
                 confirmButtonText: "Cerrar"
             });
-            return; // Detener la ejecución si hay campos vacíos
+            return; }
+
+        if(tipoMovimiento === "entrada"){
+
+            if(fecha === "" || cantidadMovimiento === "" || facturacion === "" || observacion === "" || id_producto === ""
+            ){
+                swal({
+                    type: "error",
+                    title: "Campos vacíos",
+                    text: "Por favor, complete todos los campos obligatorios para editar el movimiento.",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                });
+                return; // Detener la ejecución si hay campos vacíos
+            }
+
+        }else if(tipoMovimiento === "salida"){
+
+                 // Validaciones básicas antes de enviar
+            if(fecha === ""  || cantidadMovimiento === ""  || observacion === "" || id_producto === ""){
+                swal({
+                    type: "error",
+                    title: "Campos vacíos",
+                    text: "Por favor, complete todos los campos obligatorios para editar el movimiento.",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                });
+                return; // Detener la ejecución si hay campos vacíos
+            }
+
         }
+
+        
 
         var datos = new FormData();
         datos.append("idMovimientoEditarAjax", idMovimientoEditar); // Usaremos un nombre diferente para diferenciar en PHP
@@ -293,30 +320,28 @@ $(document).ready(function(){
                 console.log("Respuesta del servidor al editar movimiento:", respuesta);
 
                 if(respuesta.status === "ok"){
-                    swal({
-                        type: "success",
-                        title: "¡El movimiento ha sido editado correctamente!",
-                        showConfirmButton: true,
-                        confirmButtonText: "Cerrar"
-                    }).then((result) => {
-                        if (result.value) {
-                            $('#modalEditarMovimiento').modal('hide'); // Ocultar el modal
-                            // Recargar los movimientos de la tabla para ver los cambios
-                            // Si tienes una función para recargar la tabla de movimientos, llámala aquí.
-                            // Por ejemplo, si tienes una función 'cargarMovimientosTabla()':
-                            // cargarMovimientosTabla(); 
-                            window.location.reload(); // Recarga completa para simplicidad
-                        }
-                    });
-                } else {
-                    swal({
-                        type: "error",
-                        title: "Error al editar movimiento",
-                        text: respuesta.message || "No se pudo actualizar el movimiento. Inténtalo de nuevo.",
-                        showConfirmButton: true,
-                        confirmButtonText: "Cerrar"
-                    });
-                }
+                        swal({
+                            type: "success",
+                            title: "¡El movimiento ha sido actualizado correctamente!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result) => {
+                            if (result.value) {
+                                $('#modalEditarMovimiento').modal('hide'); 
+
+                                
+                                window.location.reload(); // Recarga completa para simplicidad
+                            }
+                        });
+                    } else {
+                        swal({
+                            type: "error",
+                            title: "Error al actualizar movimiento",
+                            text: respuesta.message || "No se pudo actualizar el movimiento. Consulte con su Inge.",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        });
+                    }
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.error("Error en la petición AJAX al editar movimiento:", textStatus, errorThrown, jqXHR.responseText);
@@ -392,7 +417,7 @@ $(document).ready(function(){
 
             // Validaciones específicas de Salida
             if (fecha === "" || cantidad === "" || observacion === "" || parseInt(cantidad) <= 0) {
-                Swal.fire({
+                swal({
                     icon: "error",
                     title: "Campos Incompletos/Inválidos",
                     text: "Para registrar una salida, por favor completa la fecha, cantidad (mayor a cero) y observación.",
@@ -413,7 +438,7 @@ $(document).ready(function(){
 
             // Validaciones específicas de Entrada
             if (fecha === "" || cantidad === "" || observacion === "" || parseInt(cantidad) <= 0) {
-                 Swal.fire({
+                 swal({
                     icon: "error",
                     title: "Campos Incompletos/Inválidos",
                     text: "Para registrar una entrada, por favor completa la fecha, cantidad (mayor a cero) y observación.",
@@ -425,7 +450,7 @@ $(document).ready(function(){
 
         } else {
             // Esto no debería pasar si hay pestañas activas
-            Swal.fire({
+            swal({
                 icon: "error",
                 title: "Error de Pestaña",
                 text: "No se pudo determinar el tipo de movimiento. Por favor, selecciona una pestaña.",
@@ -460,28 +485,28 @@ $(document).ready(function(){
             success: function(respuesta){
                 console.log("Respuesta del servidor al crear movimiento:", respuesta);
 
+
                 if(respuesta.status === "ok"){
-                    swal({
-                        icon: "success",
-                        title: "¡Movimiento creado!",
-                        text: respuesta.message || "El movimiento ha sido registrado correctamente.",
-                        showConfirmButton: true,
-                        confirmButtonText: "Cerrar"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#modalCrearMovimiento').modal('hide');
-                            window.location.reload();
-                        }
-                    });
-                } else {
-                    swal({
-                        icon: "error",
-                        title: "Error al crear movimiento",
-                        text: respuesta.message || "No se pudo registrar el movimiento. Inténtalo de nuevo.",
-                        showConfirmButton: true,
-                        confirmButtonText: "Cerrar"
-                    });
-                }
+                        swal({
+                            type: "success",
+                            title: "¡El movimiento ha sido creado correctamente!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result) => {
+                            if (result.value) {
+                                $('#modalCrearMovimiento').modal('hide');
+                                window.location.reload(); // Recarga completa para simplicidad
+                            }
+                        });
+                    } else {
+                        swal({
+                            type: "error",
+                            title: "Error al crear el movimiento",
+                            text: respuesta.message || "No se pudo crear el movimiento. consulte con su INGE.",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        });
+                    }
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.error("Error en la petición AJAX al crear movimiento:", textStatus, errorThrown, jqXHR.responseText);

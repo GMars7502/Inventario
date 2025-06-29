@@ -127,24 +127,14 @@ class ControladorInventario{
         $tablaMovimientos = "inventario"; // Nombre de tu tabla de movimientos
         $tablaProductos = "productos"; // Nombre de tu tabla de productos para actualizar stock
 
-        // 1. Registrar el movimiento en la tabla de inventario
         $respuestaMovimiento = ModeloInventario::mdlIngresarMovimientoInventario($tablaMovimientos, $datos);
 
         if($respuestaMovimiento !== "ok"){
             return ["status" => "error", "message" => "Error al registrar el movimiento en la base de datos."];
         }
 
-        // 2. Actualizar el stock del producto
         $respuestaStock = "ok";
-        /*
-        $respuestaStock = ModeloProductos::mdlActualizarStockProducto(
-            $tablaProductos,
-            $datos["id_producto"],
-            $datos["cant_movimiento"],
-            $datos["tipo_movimiento"]
-        );
-
-        */
+       
 
         if($respuestaStock == "ok"){
             return ["status" => "ok", "message" => "Movimiento y stock actualizados correctamente."];
