@@ -47,7 +47,6 @@ $('.tablaProductosInventario').DataTable( {
 
 
 
-
 $('.tablaProductosInventario').on("click", ".btnVerKardex", function(){
 
     var idProducto = $(this).attr("idProducto");

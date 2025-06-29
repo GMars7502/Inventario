@@ -163,7 +163,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 });
 
 function cambios(){
-	sumarTotalPrecios();
+			sumarTotalPrecios();
 
 	        // AGREGAR IMPUESTO
 
@@ -492,7 +492,7 @@ function sumarTotalPrecios(){
 
 	}
 
-	var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
+	var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios,0);
 	
 	$("#nuevoTotalVenta").val(sumaTotalPrecio);
 	$("#totalVenta").val(sumaTotalPrecio);
@@ -1020,6 +1020,8 @@ $(".formularioVenta").on("change", "#opcionDelivery", function () {
 
 $(document).ready(function() {
 
+	if ($(".formularioVenta").length > 0) {
+
     var costoDeliveryInput = $("#costoDelivery").val();
 
     var opcionDelivery = $("#opcionDelivery").val();
@@ -1040,7 +1042,7 @@ $(document).ready(function() {
 
 	sumarTotalPrecios();
 	
-
+}
 
 });
 

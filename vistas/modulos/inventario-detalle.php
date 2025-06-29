@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+                    <table id="tablaInventario" class="table table-bordered table-striped dt-responsive tablas" width="100%">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -91,11 +91,6 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tablaMovimientosInventario">
-                            <tr>
-                                <td colspan="6" class="text-center">Cargando movimientos...</td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
 
@@ -108,10 +103,13 @@
 
 
 
+          <?php
+              #region Modal EDITAR  
+          ?>
 
 
 
-<div id="modalEditarProducto" class="modal fade" role="dialog">
+<div id="modalEditarMovimiento" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -127,7 +125,7 @@
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar producto</h4>
+          <h4 class="modal-title">Editar Movimiento</h4>
 
         </div>
 
@@ -139,147 +137,92 @@
 
           <div class="box-body">
 
+            <input type="hidden" id="idMovimientoEditar" name="idMovimientoEditar">
 
-            <!-- ENTRADA PARA SELECCIONAR CATEGORÍA -->
+
+            <!-- ENTRADA PARA SELECCIONAR FECHA -->
 
             <div class="form-group">
-              
+              Fecha
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
-                <select class="form-control input-lg"  name="editarCategoria" readonly required>
-                  
-                  <option id="editarCategoria"></option>
-
-                </select>
-
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+                <input type="date" class="form-control input-lg" name="fecha" id="fecha" required>
               </div>
-
             </div>
 
-            <!-- ENTRADA PARA EL CÓDIGO -->
+            <!-- ENTRADA PARA TIPO DE MOVIMIENTO -->
             
             <div class="form-group">
-              
+              <label>Tipo de movimiento</label>
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-code"></i></span>
 
-                <input type="text" class="form-control input-lg" id="editarCodigo" name="editarCodigo" readonly required>
-
+                <select class="form-control input-lg" id="tipoMovimiento" name="tipoMovimiento" required>
+                  <option value="">Seleccione tipo</option>
+                  <option value="entrada">Entrada</option>
+                  <option value="salida">Salida</option>
+                </select>
               </div>
 
             </div>
 
-            <!-- ENTRADA PARA LA DESCRIPCIÓN -->
+             <!-- ENTRADA CANTIDAD DE MOVIMIENTO -->
 
              <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span> 
 
-                <input type="text" class="form-control input-lg" id="editarDescripcion" name="editarDescripcion" required>
-
-              </div>
-
-            </div>
-
-             <!-- ENTRADA PARA STOCK -->
-
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-check"></i></span> 
-
-                <input type="number" class="form-control input-lg" id="editarStock" name="editarStock" min="0" required>
-
-              </div>
-
-            </div>
-
-             <!-- ENTRADA PARA PRECIO COMPRA -->
-
-             <div class="form-group row">
-
-                <div class="col-xs-6">
-                
-                  <div class="input-group">
+                <div class="input-group">
                   
+                  <input type="hidden" class="form-control input-lg" 
+                        id="idVenta" name="idVenta" 
+                        maxlength="50">
+                </div>
+              </div>
+
+
+            <!-- ENTRADA CANTIDAD DE MOVIMIENTO -->
+
+             <div class="form-group">
+                <label for="cantidadMovimiento">Cantidad de movimiento</label>
+
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span> 
+
+                  <input type="number" class="form-control input-lg" 
+                        id="cantidadMovimiento" name="cantidadMovimiento" 
+                        min="1" step="1" required>
+                </div>
+              </div>
+
+             <!-- ENTRADA PARA FACTURACION -->
+
+             <div class="form-group">
+                <label for="facturacion">Facturación</label>
+
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-check"></i></span> 
+
+                  <input type="text" class="form-control input-lg" 
+                        id="facturacion" name="facturacion" 
+                        maxlength="50" required>
+                </div>
+              </div>
+
+             <!-- ENTRADA PARA OBSERVACION -->
+
+             <div class="form-group"> 
+                <label for="observacion">Observación</label>
+
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span> 
 
-                    <input type="number" class="form-control input-lg" id="editarPrecioCompra" name="editarPrecioCompra" step="any" min="0" required>
-
+                    <input type="text" class="form-control input-lg" 
+                          id="observacion" name="observacion" 
+                          maxlength="50" required>
                   </div>
+              </div>
 
-                </div>
-
-                <!-- ENTRADA PARA PRECIO VENTA -->
-
-                <div class="col-xs-6">
-                
-                  <div class="input-group">
-                  
-                    <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span> 
-
-                    <input type="number" class="form-control input-lg" id="editarPrecioVenta" name="editarPrecioVenta" step="any" min="0" readonly required>
-
-                  </div>
-                
-                  <br>
-
-                  <!-- CHECKBOX PARA PORCENTAJE -->
-
-                  <div class="col-xs-6">
-                    
-                    <div class="form-group">
-                      
-                      <label>
-                        
-                        <input type="checkbox" class="minimal porcentaje" checked>
-                        Utilizar procentaje
-                      </label>
-
-                    </div>
-
-                  </div>
-
-                  <!-- ENTRADA PARA PORCENTAJE -->
-
-                  <div class="col-xs-6" style="padding:0">
-                    
-                    <div class="input-group">
-                      
-                      <input type="number" class="form-control input-lg nuevoPorcentaje" min="0" value="40" required>
-
-                      <span class="input-group-addon"><i class="fa fa-percent"></i></span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-            </div>
-
-            <!-- ENTRADA PARA SUBIR FOTO -->
-
-             <div class="form-group">
-              
-              <div class="panel">SUBIR IMAGEN</div>
-
-              <input type="file" class="nuevaImagen" name="editarImagen">
-
-              <p class="help-block">Peso máximo de la imagen 2MB</p>
-
-              <img src="vistas/img/productos/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
-
-              <input type="hidden" name="imagenActual" id="imagenActual">
-
-            </div>
-
+            
           </div>
 
         </div>
@@ -298,17 +241,130 @@
 
       </form>
 
-        <?php
-
-          $editarProducto = new ControladorProductos();
-          $editarProducto -> ctrEditarProducto();
-
-        ?>      
 
     </div>
 
-  </div>
+    </div>
 
-</div>
+    </div>
 
+            <?php
+        #region Modal CREAR 
+    ?>
+
+<div id="modalCrearMovimiento" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" method="post" enctype="multipart/form-data" id="formCrearMovimiento">
+
+                <div class="modal-header" style="background:#3c8dbc; color:white">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Crear Nuevo Movimiento de Inventario</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="box-body">
+
+                        <input type="hidden" id="idProductoMovimiento" name="idProductoMovimiento">
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tabSalida">Salidas</a></li>
+                            <li><a data-toggle="tab" href="#tabEntrada">Entradas</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+
+                            <div id="tabSalida" class="tab-pane fade in active">
+                                <h5 class="text-center">Registrar una salida</h5>
+                                <hr>
+
+                                <div class="form-group">
+                                    <label for="fechaSalida">Fecha:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="date" class="form-control input-lg" name="fechaSalida" id="fechaSalida" data-requerido="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cantidadSalida">Cantidad Salida:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-minus"></i></span>
+                                        <input type="number" class="form-control input-lg" name="cantidadSalida" id="cantidadSalida" min="1" step="1" data-requerido="true">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="observacionSalida">Observación:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-comment"></i></span>
+                                        <input type="text" class="form-control input-lg" name="observacionSalida" id="observacionSalida" maxlength="255" data-requerido="true">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="tabEntrada" class="tab-pane fade">
+                                <h5 class="text-center">Registrar una entrada</h5>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="fechaEntrada">Fecha:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+                                        <input type="date" class="form-control input-lg" name="fechaEntrada" id="fechaEntrada" data-requerido="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cantidadEntrada">Cantidad Entrada:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span> 
+                                        <input type="number" class="form-control input-lg" 
+                                               id="cantidadEntrada" name="cantidadEntrada" min="1" step="1" data-requerido="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="facturaBoletaEntrada">Factura/Boleta:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-file-text"></i></span> 
+                                        <input type="text" class="form-control input-lg" 
+                                               id="facturaBoletaEntrada" name="facturaBoletaEntrada" maxlength="50">
+                                    </div>
+                                </div>
+
+                                <div class="form-group"> 
+                                    <label for="observacionEntrada">Observación:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-comment"></i></span> 
+                                        <input type="text" class="form-control input-lg" 
+                                               id="observacionEntrada" name="observacionEntrada" maxlength="255" data-requerido="true">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="proveedorEntrada">Proveedor:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-truck"></i></span> 
+                                        <input type="text" class="form-control input-lg" 
+                                               id="proveedorEntrada" name="proveedorEntrada" maxlength="100">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardarMovimiento">Guardar Movimiento</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    </div>
 </div>
